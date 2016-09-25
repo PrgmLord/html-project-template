@@ -3,34 +3,36 @@ const gulp = require('gulp');
 const browserSync = require('browser-sync').create();
 const sass = require('gulp-sass');
 const jade = require('gulp-jade');
-const copy = requite('gulp-copy');
+const copy = require('gulp-contrib-copy');
 // Static Server + watching scss/html files
 
-gulp.task('serve', ['sass', 'templates', 'copyfiles'], function() {
+gulp.task('serve', ['sass', 'templates', 'copyjs', 'copyimg'], function() {
   browserSync.init({
-    server: './public'
+    server: 'public/'
   });
   gulp.watch(["dev/assets/sass/*.scss", "dev/assets/sass/*.sass"], ['sass']);
   gulp.watch("public/*.html").on('change', browserSync.reload);
   gulp.watch("dev/*.jade", ['templates']);
-  gulp.watch("dev/assets/images/*.*", ['copyimg']);
-  gulp.watch("dev/assets/js/*.*", ['copyjs']);  
+  gulp.watch("dev/assets/images/*", ['copyimg']);
+  gulp.watch("dev/assets/js/*", ['copyjs']).on('change', browserSync.reload);
 });
 
-gullp.task('copyjs', function() {
-  return gulp.src('dev/assets/js/*.*')
-    .pipe($.copy('public/js/'));
+gulp.task('copyjs', function() {
+  gulp.src('dev/assets/js/*')
+    .pipe(copy())
+    .pipe(gulp.dest('public/js/'));
 });
 
 gulp.task('copyimg', function() {
-  return gulp.src('dev/assets/images/*.*')
-    .pipe($.copy('public/images/'));
+  gulp.src('dev/assets/images/*')
+    .pipe(copy())
+    .pipe(gulp.dest('public/images/'));
 });
 
 gulp.task( 'sass' , function() {
   return gulp.src("dev/assets/sass/main.sass")
     .pipe(sass())
-    .pipe(gulp.dest("public/css"))
+    .pipe(gulp.dest("public/css/"))
     .pipe(browserSync.stream());
 });
 
