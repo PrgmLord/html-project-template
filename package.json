@@ -1,0 +1,18 @@
+{
+  "name": "html-project-template",
+  "version": "1.0.0",
+  "description": "HTML Project template with sass, jade and browser-sync support",
+  "main": "gulp.js",
+  "scripts": {
+    "test": "gulp"
+  },
+  "author": "Foyez",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.16.0",
+    "gulp": "^3.9.1",
+    "gulp-copy": "0.0.2",
+    "gulp-jade": "^1.1.0",
+    "gulp-sass": "^2.3.2"
+  }
+}
